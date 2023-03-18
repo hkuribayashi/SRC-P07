@@ -9,16 +9,14 @@ class Usuario:
         self.__senha = senha
 
     @staticmethod
-    def get_salt_aleatorio(length=8):
+    def get_string_aleatoria(length=8):
         letras = string.ascii_lowercase
         result_str = ''.join(random.choice(letras) for _ in range(length))
         return result_str
 
     @staticmethod
-    def get_senha_salteada(password):
-        salt = Usuario.get_salt_aleatorio()
-        password = password + salt
-        return salt + ":" + hashlib.sha256(password.encode("utf-8")).hexdigest()
+    def get_hash(password):
+        return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     def login(self, password):
         pass
