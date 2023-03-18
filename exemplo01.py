@@ -3,10 +3,10 @@ import string
 import random
 
 
-class User:
-    def __init__(self, username, password):
-        self.__username = username
-        self.__password = password
+class Usuario:
+    def __init__(self, username, senha):
+        self.__user = username
+        self.__senha = senha
 
     @staticmethod
     def get_salt_aleatorio(length=8):
@@ -16,7 +16,7 @@ class User:
 
     @staticmethod
     def get_senha_salteada(password):
-        salt = User.get_salt_aleatorio()
+        salt = Usuario.get_salt_aleatorio()
         password = password + salt
         return salt + ":" + hashlib.sha256(password.encode("utf-8")).hexdigest()
 
@@ -24,12 +24,12 @@ class User:
         pass
 
     def __str__(self):
-        return "User [username={}, password={}]".format(self.__username, self.__password)
+        return "User [username={}, password={}]".format(self.__user, self.__senha)
 
 
 if __name__ == '__main__':
     # Cria e imprime um usuário
-    hugo = User("hkuribayashi", "123456")
+    hugo = Usuario("hkuribayashi", "123456")
     print(hugo)
 
     # Testar o login do Usuario
