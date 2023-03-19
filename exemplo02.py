@@ -15,7 +15,7 @@ def gerador_cifra(chave, modo="CBC"):
 
 def criptografa_arquivo(arquivo_, cifra_):
     encriptador = cifra_.encryptor()
-    return encriptador.update(arquivo_)# + encriptador.finalize()
+    return encriptador.update(arquivo_)
 
 
 def decriptografa_arquivo(arquivo_criptografado_, cifra_):
@@ -32,18 +32,11 @@ if __name__ == '__main__':
     chave_simetrica = os.urandom(32)
 
     # Gera uma Cifra Simétrica do tipo ECB
-    cifra = gerador_cifra(chave_simetrica, "ECB")
 
     # Criptografa o arquivo
-    arquivo_criptografado = criptografa_arquivo(arquivo, cifra)
 
     # Salva o arquivo criptografado
-    with open('arquivo.txt.encrypted', 'wb') as f:
-        f.write(arquivo_criptografado)
 
     # Decriptografa o arquivo
-    arquivo_plano = decriptografa_arquivo(arquivo_criptografado, cifra)
 
     # Salva novo arquivo gerado
-    with open('novo_arquivo.txt', 'wb') as f:
-        f.write(arquivo_plano)

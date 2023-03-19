@@ -59,17 +59,9 @@ if __name__ == '__main__':
     mensagem = b"Uma mensagem que precisa ser assinada"
 
     # Usuário hugo assinando a mensagem
-    assinatura = hugo.assinar(mensagem)
 
     # Verificando a assinatura
-    resultado = Usuario.verificar(assinatura, mensagem, hugo.chave_publica)
-    print(resultado)
 
     # Criptografando uma mensagem secreta
-    msg_plana = b"Mensagem Secreta"
-    msg_cifrada = Usuario.criptografar(msg_plana, hugo.chave_publica)
-    print(msg_cifrada)
 
     # Decifrando a mensagem secreta
-    msg_plana = hugo.decriptografar(msg_cifrada)
-    print(msg_plana.decode("ascii"))
