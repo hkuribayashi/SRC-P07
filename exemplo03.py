@@ -1,7 +1,10 @@
+import pickle
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.asymmetric import padding
+
+from utils import save_key, load_key
 
 
 class Usuario:
@@ -65,13 +68,25 @@ if __name__ == '__main__':
     validacao = Usuario.verificar(assinatura, mensagem, hugo.chave_publica)
     print(validacao)
 
+    with open('arquivo.txt', 'rb') as f:
+        arquivo = f.read()
+
     # Criptografando uma mensagem secreta
     mensagem2 = b"Nova Mensagem"
-    msg_cifrada = Usuario.criptografar(mensagem2, hugo.chave_publica)
+    msg_cifrada = Usuario.criptografar(arquivo, hugo.chave_publica)
 
-    with open('arquivo2.txt.encriptado', 'wb') as f:
-        f.write(msg_cifrada)
+    with open('arquivo_cifrado.txt', 'wb') as k:
+        k.write(msg_cifrada)
+
+    chave_privada_hugo = 'chave_privada_hugo'
+    save_key(hugo.chave_privada, chave_privada_hugo)
+
+    hugo.chave_privada = load_key(chave_privada_hugo)
+    hugo.chave_publica = hugo.chave_privada.public_key()
 
     # Decifrando a mensagem secreta
-    msg_plana_ = hugo.decriptografar(msg_cifrada)
+    with open('arquivo_cifrado.txt', 'rb') as l:
+        arquivo_cifrado = l.read()
+
+    msg_plana_ = hugo.decriptografar(arquivo_cifrado)
     print(msg_plana_.decode())
