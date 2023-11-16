@@ -30,13 +30,24 @@ if __name__ == '__main__':
 
     # Gera chave simétrica aleatória
     chave_simetrica = os.urandom(32)
+    with open('chave_simetrica.txt', 'wb') as f:
+        f.write(chave_simetrica)
 
     # Gera uma Cifra Simétrica do tipo ECB
+    cifra = gerador_cifra(chave_simetrica, "ECB")
 
     # Criptografa o arquivo
+    arquivo_cifrado = criptografa_arquivo(arquivo, cifra)
 
     # Salva o arquivo criptografado
+    with open('arquivo.txt.encriptado', 'wb') as f:
+        f.write(arquivo_cifrado)
 
     # Decriptografa o arquivo
+    with open('arquivo.txt.encriptado', 'rb') as f:
+        novo_arquivo = f.read()
+    arquivo_plano = decriptografa_arquivo(novo_arquivo, cifra)
 
     # Salva novo arquivo gerado
+    with open('novo_arquivo.txt', 'wb') as f:
+        f.write(arquivo_plano)

@@ -6,7 +6,8 @@ import random
 class Usuario:
     def __init__(self, username, senha):
         self.__user = username
-        self.__senha = senha
+        salt = Usuario.get_string_aleatoria()
+        self.__senha = salt +":"+Usuario.get_hash(senha+salt)
 
     @staticmethod
     def get_string_aleatoria(length=8):
@@ -19,7 +20,9 @@ class Usuario:
         return hashlib.sha256(password.encode("utf-8")).hexdigest()
 
     def login(self, password):
-        pass
+        salt = self.__senha.split(":")
+        hash_password = Usuario.get_hash(password+salt[0])
+        return hash_password == salt[1]
 
     def __str__(self):
         return "User [username={}, password={}]".format(self.__user, self.__senha)
@@ -28,7 +31,9 @@ class Usuario:
 if __name__ == '__main__':
     # Cria e imprime um usuário
     hugo = Usuario("hkuribayashi", "123456")
+
+    saida = hugo.login("123456")
+    print(saida)
+
     print(hugo)
 
-    # Testar o login do Usuario
-    # hugo.login("senha")
